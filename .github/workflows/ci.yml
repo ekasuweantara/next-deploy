@@ -24,10 +24,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      SENTRY_AUTH_TOKEN: 5e5d9c8fb3864b81a6728e9de9674edf1851302a02864224929c80646de1c2b6
-      SENTRY_DSN: https://fb9a6566728547b79ab7c5fef044d1e2@o4504638061215744.ingest.sentry.io/4504649566978048
-      SENTRY_ORG: antara-ok
-      SENTRY_PROJECT: nextjs-sentry-example
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
       SENTRY_LOG_LEVEL: info
     steps:
       - uses: actions/checkout@v3
