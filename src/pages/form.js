@@ -6,20 +6,33 @@ import axios from "axios";
 const Form = () => {
   const [title, setTitle] = useState("");
   const [todo, setTodo] = useState("");
+  const [error, setError] = useState("error404");
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("https://jsonplaceholder.typicode.com/postss", {
-        title: title,
-        body: todo,
-        userId: 1,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        Sentry.captureException(error)
-      });
+    console.log(error)
+    if (error === "error404") {
+      axios
+        .post("https://jsonplaceholder.typicode.com/postss", {
+          title: title,
+          body: todo,
+          userId: 1,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          Sentry.captureException(error);
+        });
+    } else {
+      axios
+        .put("https://jsonplaceholder.typicode.com/posts/1111111111111111111")
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          Sentry.captureException(error);
+        });
+    }
   };
 
   return (
@@ -77,6 +90,48 @@ const Form = () => {
               value={todo}
               onChange={(e) => setTodo(e.target.value)}
             />
+          </div>
+          <div
+            style={{
+              marginBottom: "25px",
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row-reverse",
+              }}
+            >
+              <label htmlFor="error404" style={{ marginLeft: "5px" }}>
+                Error 404
+              </label>
+              <input
+                type="radio"
+                id="error404"
+                name="error"
+                checked={error === "error404"}
+                onClick={() => setError("error404")}
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row-reverse",
+              }}
+            >
+              <label htmlFor="error500" style={{ marginLeft: "5px" }}>
+                Error 500
+              </label>
+              <input
+                type="radio"
+                id="error500"
+                name="error"
+                checked={error === "error500"}
+                onClick={() => setError("error500")}
+              />
+            </div>
           </div>
           <Button type="submit">Submit</Button>
         </form>
